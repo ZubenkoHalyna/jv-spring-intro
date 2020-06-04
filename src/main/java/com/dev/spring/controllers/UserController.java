@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/inject")
-    public String getUser() {
+    public String injectData() {
         userService.add(new User("Bob", "bob@i.ua", ""));
         userService.add(new User("Alisa", "alisa@i.ua", ""));
         return "Data injected";

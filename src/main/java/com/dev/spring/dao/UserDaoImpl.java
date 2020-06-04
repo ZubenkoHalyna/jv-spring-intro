@@ -1,7 +1,7 @@
 package com.dev.spring.dao;
 
-import com.dev.spring.model.User;
 import com.dev.spring.dto.UserResponseDto;
+import com.dev.spring.model.User;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,8 +39,8 @@ public class UserDaoImpl implements UserDao {
     public List<UserResponseDto> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery(
-                    "SELECT new com.dev.spring.dto.UserResponseDto(u.name, u.email) " +
-                            "FROM User u", UserResponseDto.class)
+                    "SELECT new com.dev.spring.dto.UserResponseDto(u.name, u.email) "
+                            + "FROM User u", UserResponseDto.class)
                     .getResultList();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -51,8 +51,8 @@ public class UserDaoImpl implements UserDao {
     public UserResponseDto get(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery(
-                    "SELECT new com.dev.spring.dto.UserResponseDto(u.name, u.email) " +
-                            "FROM User u WHERE u.id = :id", UserResponseDto.class)
+                    "SELECT new com.dev.spring.dto.UserResponseDto(u.name, u.email) "
+                            + "FROM User u WHERE u.id = :id", UserResponseDto.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {

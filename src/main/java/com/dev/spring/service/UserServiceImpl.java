@@ -1,8 +1,8 @@
 package com.dev.spring.service;
 
 import com.dev.spring.dao.UserDao;
-import com.dev.spring.model.User;
 import com.dev.spring.dto.UserResponseDto;
+import com.dev.spring.model.User;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
