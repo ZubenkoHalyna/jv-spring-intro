@@ -1,11 +1,11 @@
 package com.dev.spring.dao;
 
 import com.dev.spring.model.User;
+import com.dev.spring.dto.UserResponseDto;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,10 +36,25 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<UserResponseDto> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("SELECT u from User u", User.class);
-            return query.list();
+            return session.createQuery(
+                    "SELECT new com.dev.spring.dto.UserResponseDto(u.name, u.email) " +
+                            "FROM User u", UserResponseDto.class)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public UserResponseDto get(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery(
+                    "SELECT new com.dev.spring.dto.UserResponseDto(u.name, u.email) " +
+                            "FROM User u WHERE u.id = :id", UserResponseDto.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
