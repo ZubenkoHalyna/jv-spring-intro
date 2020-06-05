@@ -1,13 +1,12 @@
 package com.dev.spring.service;
 
-import com.dev.spring.dto.UserResponseDto;
 import com.dev.spring.model.User;
 import java.util.List;
 
 public interface UserService {
     User add(User user);
 
-    List<UserResponseDto> listUsers();
+    List<User> listUsers();
 
-    UserResponseDto get(Long id);
+    User get(Long id);
 }

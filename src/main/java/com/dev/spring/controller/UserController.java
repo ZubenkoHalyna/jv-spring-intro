@@ -1,9 +1,10 @@
-package com.dev.spring.controllers;
+package com.dev.spring.controller;
 
 import com.dev.spring.dto.UserResponseDto;
 import com.dev.spring.model.User;
 import com.dev.spring.service.UserService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +29,20 @@ public class UserController {
 
     @GetMapping("/all")
     public List<UserResponseDto> getAll() {
-        return userService.listUsers();
+        return userService.listUsers().stream()
+                .map(this::getDtoFromUser)
+                .collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public UserResponseDto getUser(@PathVariable Long id) {
-        return userService.get(id);
+        return getDtoFromUser(userService.get(id));
+    }
+
+    private UserResponseDto getDtoFromUser(User user) {
+        UserResponseDto dto = new UserResponseDto();
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        return dto;
     }
 }
